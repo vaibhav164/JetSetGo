@@ -1,32 +1,84 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react'
-import { Alert, StyleSheet, View } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Alert, Modal, StyleSheet, Text, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
+import ReplaceIcon from 'react-native-vector-icons/AntDesign';
 import { getFlightDetails } from '../actions/getFlightDetails';
+import { TitleBox } from '../components/TitleBox';
+import Button from '../components/Buttons';
+import { SearchScreen } from '../components/SearchScreen';
+
+interface flightData {
+    aircraft: string;
+    airline: string;
+    arrivalTime: string;
+    departureTime: string;
+    destination: string;
+    duration: string;
+    flightNumber: string;
+    gate: string;
+    id: number;
+    origin: string;
+    price: number;
+    seatsAvailable: number;
+}
 export const BookingScreen = ({ navigation }) => {
-    const [tripData, setTripData] = useState([]);
+    const [tripData, setTripData] = useState<flightData[]>([]);
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+    const [flightModalOpen, setFlightModalOpen] = useState(false);
     useFocusEffect(
         useCallback(() => {
             const fetchData = async () => {
-              try {
-                const flightData = await getFlightDetails();
-                setTripData(flightData);
-              } catch (error) {
-                Alert.alert("Error", error);
-                // console.error("Error fetching flight details:", error);
-              }
+                try {
+                    const flightData = await getFlightDetails();
+                    setTripData(flightData);
+                    console.log(flightData);
+
+                } catch (error) {
+                    Alert.alert("Error", error);
+                }
             };
-        
+
             fetchData();
-            },[]))
-        //   }, [])
+        }, []))
+    //   }, [])
+    useEffect(() => {
+        if (tripData.length) {
+            setOrigin(tripData[0]?.origin)
+            setDestination(tripData[0]?.destination)
+        }
+    }, [tripData]);
+
+
+    const handleFlipValue = () => {
+        const storeValue = origin;
+        setOrigin(destination)
+        setDestination(storeValue);
+    }
+
+    const handleFlightSearch = () => {
+        console.log("search Pressed");
+    }
+
+    const handleTitleBoxTouch = () => {
+        setFlightModalOpen(true)
+    }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Icon onPress={() => { navigation.goBack() }} name="arrow-back" size={30} color="#fff" />
             </View>
             <View style={styles.viewBox}>
-
+                <View style={{ height: '30%', width: '95%', flexDirection: 'row', paddingHorizontal: '2%', justifyContent: 'center', alignItems: 'center' }}>
+                    <TitleBox handlePress={handleTitleBoxTouch} cityName={origin} cityShortName={origin.slice(0, 3)} topTitle='From' />
+                    <ReplaceIcon name='retweet' size={30} onPress={() => handleFlipValue()} color={'#000'} />
+                    <TitleBox handlePress={handleTitleBoxTouch} cityName={destination} cityShortName={destination.slice(0, 3)} topTitle='To' />
+                </View>
+                <Button title='Search Flights' handleSubmit={() => { handleFlightSearch() }} />
+                <Modal visible={flightModalOpen} animationType='none' transparent={false}>
+                    <SearchScreen handleClose={()=>setFlightModalOpen(false)}/>
+                </Modal>
             </View>
         </View>
     )
@@ -40,9 +92,14 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#3199da',
         justifyContent: 'center',
-        padding: '2%'
+        padding: '2%',
+        position: 'absolute'
     },
-    viewBox:{
-        flex:1
+    viewBox: {
+        flex: 1,
+        marginTop: '15%',
+        paddingTop: '15%',
+        alignItems: 'center',
+        justifyContent: 'space-around'
     }
 })
