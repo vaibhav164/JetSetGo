@@ -27,9 +27,7 @@ const styles = StyleSheet.create({
     },
     image:{
         height:'100%',
-        width:'100%',
-        borderCurve:'circular',
-        borderBottomEndRadius:50
+        width:'100%'
     },
     formBox:{
         flex:1,
@@ -39,7 +37,6 @@ const styles = StyleSheet.create({
     imageBox:{
         height:'30%', 
         width:'100%', 
-        backgroundColor:'yellow', 
         borderBottomEndRadius:30
     },
     buttonBox:{
@@ -48,13 +45,14 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
-    textBox:{height:'10%',
-    width:'100%', 
-    backgroundColor:'', 
-    borderBottomEndRadius:100, 
-    borderBottomStartRadius:100, 
-    justifyContent:'center', 
-    alignItems:'center'
+    textBox:{
+        height:'10%',
+        width:'100%', 
+        backgroundColor:'#3199da', 
+        borderBottomEndRadius:100, 
+        borderBottomStartRadius:100, 
+        justifyContent:'center', 
+        alignItems:'center'
 },
     text:{fontSize:22, 
         fontWeight:'600', 
