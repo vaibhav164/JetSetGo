@@ -1,19 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import { HomeScreen } from './src/HomeScreen';
+import { RootNavigator } from './src/Navigators/RootNavigator';
 
 
-function App(): React.JSX.Element {
+const App = () => {
 
-  return (
-    <HomeScreen />
-  );
+  return (<RootNavigator />);
 }
 
 export default App;
