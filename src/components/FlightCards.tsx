@@ -18,16 +18,16 @@ export const FlightCard =({airlineName, price, duration}:flightCardProps)=>{
 
 const styles = StyleSheet.create({
     box:{
-        width:'90%',
-        height:'15%',
+        width:'100%',
         flexDirection:'row',
         justifyContent:'space-evenly',
         borderWidth:1,
         borderRadius:10,
-        marginVertical:'1%',
         alignItems:'center',
         borderColor:'#3199da',
-        alignSelf:'center'
+        alignSelf:'center',
+        marginVertical:'2%',
+        paddingVertical:'3%'
     },
     airline:{
         fontSize:20,
