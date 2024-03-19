@@ -4,12 +4,13 @@ interface ButtonProps {
     title: string;
     handleSubmit: () => void;
     isLoading?: boolean;
+    color?:string
 }
 function Button(props: ButtonProps) {
-    const { title, handleSubmit, isLoading } = props;
+    const { title, handleSubmit, isLoading, color } = props;
     return (
         <TouchableWithoutFeedback disabled={isLoading} onPress={handleSubmit}>
-            <View style={{ width: '65%', backgroundColor:'#fff', borderRadius: 10, justifyContent: 'center', alignItems: 'center', borderColor: '#3199da', borderWidth: 1, paddingVertical: '3%'}}>
+            <View style={{ width: '65%', backgroundColor:color ? color : '#fff', borderRadius: 10, justifyContent: 'center', alignItems: 'center', borderColor: '#3199da', borderWidth: 1, paddingVertical: '3%'}}>
                 {
                     isLoading ?
                         <ActivityIndicator
@@ -17,7 +18,7 @@ function Button(props: ButtonProps) {
                             size='large'
                             color='#fff'
                         /> :
-                        <Text style={{ color:'#3199da', fontSize: 20}}>{title}</Text>
+                        <Text style={{ color:color ? '#fff' : '#3199da', fontSize: 20}}>{title}</Text>
                 }
             </View>
         </TouchableWithoutFeedback>

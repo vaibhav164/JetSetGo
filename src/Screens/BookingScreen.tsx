@@ -82,6 +82,10 @@ export const BookingScreen = ({ navigation }) => {
                     <TitleBox handlePress={handleTitleBoxTouch} cityName={destination} cityShortName={destination.slice(0, 3)} topTitle='To' />
                 </View>
                 <Button title='Search Flights' handleSubmit={() => { handleFlightSearch() }} />
+                <View style={styles.divider}>
+                    <Text>OR</Text>
+                </View>
+                <Button title='Search All Flights' color={'#3199da'} handleSubmit={() => { handleFlightSearch() }} />
                 <Modal visible={flightModalOpen} animationType='none' transparent={false}>
                     <SearchScreen placesList={list} handleClose={()=>setFlightModalOpen(false)}/>
                 </Modal>
@@ -107,5 +111,13 @@ const styles = StyleSheet.create({
         paddingTop: '15%',
         alignItems: 'center',
         justifyContent: 'space-around'
+    },
+    divider:{
+        marginVertical:'4%',
+        borderBottomWidth:2,
+        borderColor:'#000',
+        width:'60%',
+        paddingVertical:'2%',
+        alignItems:'center'
     }
 })
