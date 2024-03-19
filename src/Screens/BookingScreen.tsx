@@ -27,13 +27,13 @@ export const BookingScreen = ({ navigation }) => {
     const [origin, setOrigin] = useState('');
     const [destination, setDestination] = useState('');
     const [flightModalOpen, setFlightModalOpen] = useState(false);
+    const [list, setList] = useState<string[]>([])
     useFocusEffect(
         useCallback(() => {
             const fetchData = async () => {
                 try {
                     const flightData = await getFlightDetails();
                     setTripData(flightData);
-                    console.log(flightData);
 
                 } catch (error) {
                     Alert.alert("Error", error);
@@ -62,6 +62,12 @@ export const BookingScreen = ({ navigation }) => {
     }
 
     const handleTitleBoxTouch = () => {
+        const DestinaationList =tripData.map(item=>{return item.destination});
+        const OriginList = tripData.map(item=>{return item.origin}); 
+        const placeArrayUnique = ()=>{
+            return [[...new Set(DestinaationList.concat(OriginList))]]
+        }
+        setList(placeArrayUnique()[0]);
         setFlightModalOpen(true)
     }
     return (
@@ -77,7 +83,7 @@ export const BookingScreen = ({ navigation }) => {
                 </View>
                 <Button title='Search Flights' handleSubmit={() => { handleFlightSearch() }} />
                 <Modal visible={flightModalOpen} animationType='none' transparent={false}>
-                    <SearchScreen handleClose={()=>setFlightModalOpen(false)}/>
+                    <SearchScreen placesList={list} handleClose={()=>setFlightModalOpen(false)}/>
                 </Modal>
             </View>
         </View>
