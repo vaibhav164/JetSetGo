@@ -7,13 +7,14 @@ interface modalprops {
     airlineList:array;
     handleItemList:(item:string)=>void;
 }
-export const FilterModal =({handleClose, airlineList, handleItemList}:modalprops)=>{
+export const FilterModal =({handleClose, airlineList, handleItemList, title}:modalprops)=>{
     const handlePress =(item)=>{
         handleItemList(item);
     }
     return(
         <View style={styles.box}>
              <Icon name='close' size={25} color={'#000'} onPress={handleClose}/>
+             <Text style={styles.titleText}>{title}</Text>
              <View style={{height:'100%', width:'100%', alignItems:'center'}}>
                     {airlineList.map((item)=>{
                         return(
@@ -42,5 +43,11 @@ const styles = StyleSheet.create({
         fontSize:15,
         color:'#000'
     },
-    listBox:{marginVertical:'2%', justifyContent:'flex-start', alignItems:'flex-start', width:'40%', alignSelf:'center'}
+    listBox:{marginVertical:'2%', justifyContent:'flex-start', alignItems:'flex-start', width:'40%', alignSelf:'center'},
+    titleText:{
+        fontSize:20,
+        fontWeight:'600',
+        color:'#000',
+        marginTop:'3%'
+    }
 })
