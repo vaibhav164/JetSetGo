@@ -39,18 +39,21 @@ export const AllFlightsScreen =({navigation})=>{
             <View style={styles.box}>
                 <View style={styles.filterBox}>
                     <Text style={styles.title}>{'Filter By'}</Text>
-                    <Text style={[styles.normalText,activeFiler == 'price' && {color:'#3199da', fontWeight:'700'}]} onPress={()=>setActiveFilter('price')}>{"Price"}</Text>
-                    <Text style={styles.title}>{'Sort By'}</Text>
                     <Text style={[styles.normalText,activeFiler == 'airlines' && {color:'#3199da', fontWeight:'700'}]} onPress={()=>setActiveFilter('airlines')}>{"Airlines"}</Text>
+                    <Text style={styles.title}>{'Sort By'}</Text>
+                    <Text style={[styles.normalText,activeFiler == 'price' && {color:'#3199da', fontWeight:'700'}]} onPress={()=>setActiveFilter('price')}>{"Price"}</Text>
                 </View>
                     <View style={styles.clearBox}>
                         <Text style={[styles.clearAllText,activeFiler == 'clearAll' && {color:'#3199da', fontWeight:'700'}]} onPress={()=>setActiveFilter('clearAll')}>{"ClearAll"}</Text>
                         <Icon name='close' size={25} color={activeFiler == 'clearAll' ? '#3199da':'#000'} onPress={()=>setActiveFilter('clearAll')}/>
                     </View>
-                <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
-                {renderCard()}
+                <ScrollView style={styles.scroll}>
+                    <View style={styles.scrollBox} >
+                    {renderCard()}
+                    <View style={{height:50}}/>
+                </View>
                 </ScrollView>
-                <Modal visible={false} transparent={false}>
+                <Modal visible={false} transparent={true}>
                         
                 </Modal>
             </View>
@@ -76,8 +79,7 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     scroll:{
-        width:'100%',
-        flex:1
+        width:'100%'
     },
     title:{
         fontSize:20,
@@ -99,5 +101,11 @@ const styles = StyleSheet.create({
     justifyContent:'center', 
     alignItems:'center',
     marginBottom:'4%'
+},
+scrollBox:{
+    width:'100%',
+    flex:1,
+    paddingBottom:'45%',
+    height:'100%'
 }
 }) 
