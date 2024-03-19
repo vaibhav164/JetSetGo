@@ -43,10 +43,23 @@ export const AllFlightsScreen = ({ navigation }) => {
         }
     }
     const filterList =(airline:string)=>{
-        const sortedList =tripData.filter(item=>{
+        const filteredList =tripData.filter(item=>{
                 return (item.airline == airline)
         })
         setFilterModalVisible(false);
+        setRenderList(filteredList);
+    }
+    const sortListData =(sortType:string)=>{
+        console.log("sortType",sortType)
+        const sortedList = renderList.sort((a, b)=>{
+         if(sortType == 'increase') 
+            {
+                return a.price - b.price
+            }else if(sortType == 'decrease'){
+                return b.price - a.price
+            }
+        })
+        setsortModalVisible(false);
         setRenderList(sortedList);
     }
     return (
@@ -66,7 +79,7 @@ export const AllFlightsScreen = ({ navigation }) => {
                 <FlatList data={renderList} renderItem={renderCard} />
                 {<Modal visible={sortModalVisible || filterModalVisible} transparent={true} style={styles.modal}>
                     {filterModalVisible && <FilterModal handleItemList={val=>filterList(val)} handleClose={() => {setFilterModalVisible(false), setRenderList(tripData)}} title="Filer By" airlineList={airLineList} />}
-                    {sortModalVisible && <SortModal handleClose={() => {setsortModalVisible(false), setRenderList(tripData)}} title="Price By" />}
+                    {sortModalVisible && <SortModal handleSortOrder={val=>sortListData(val)} handleClose={() => {setsortModalVisible(false), setRenderList(tripData)}} title="Price By" />}
                 </Modal>}
             </View>
         </View>
