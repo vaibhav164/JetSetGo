@@ -7,6 +7,7 @@ import { getFlightDetails } from '../actions/getFlightDetails';
 import { TitleBox } from '../components/TitleBox';
 import Button from '../components/Buttons';
 import { SearchScreen } from '../components/SearchScreen';
+import { Header } from '../components/Header';
 
 interface flightData {
     aircraft: string;
@@ -72,9 +73,7 @@ export const BookingScreen = ({ navigation }) => {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Icon onPress={() => { navigation.goBack() }} name="arrow-back" size={30} color="#fff" />
-            </View>
+            <Header handleGoBack={() => { navigation.goBack() }}/>
             <View style={styles.viewBox}>
                 <View style={{ height: '30%', width: '95%', flexDirection: 'row', paddingHorizontal: '2%', justifyContent: 'center', alignItems: 'center' }}>
                     <TitleBox handlePress={handleTitleBoxTouch} cityName={origin} cityShortName={origin.slice(0, 3)} topTitle='From' />
@@ -85,8 +84,8 @@ export const BookingScreen = ({ navigation }) => {
                 <View style={styles.divider}>
                     <Text>OR</Text>
                 </View>
-                <Button title='Search All Flights' color={'#3199da'} handleSubmit={() => { handleFlightSearch() }} />
-                <Modal visible={flightModalOpen} animationType='none' transparent={false}>
+                <Button title='Search All Flights' color={'#3199da'} handleSubmit={() => { navigation.navigate('AllFlightScreen') }} />
+                <Modal visible={flightModalOpen} animationType='none' transparent={false} >
                     <SearchScreen placesList={list} handleClose={()=>setFlightModalOpen(false)}/>
                 </Modal>
             </View>
@@ -96,14 +95,6 @@ export const BookingScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    header: {
-        height: '8%',
-        width: '100%',
-        backgroundColor: '#3199da',
-        justifyContent: 'center',
-        padding: '2%',
-        position: 'absolute'
     },
     viewBox: {
         flex: 1,
