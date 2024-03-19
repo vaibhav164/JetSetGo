@@ -9,7 +9,7 @@ import Button from '../components/Buttons';
 import { SearchScreen } from '../components/SearchScreen';
 import { Header } from '../components/Header';
 
-interface flightData {
+export interface flightData {
     aircraft: string;
     airline: string;
     arrivalTime: string;
