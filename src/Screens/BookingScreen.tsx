@@ -82,7 +82,7 @@ export const BookingScreen = ({ navigation }) => {
                 </View>
                 <Button title='Search Flights' handleSubmit={() => { handleFlightSearch() }} />
                 <View style={styles.divider}>
-                    <Text>OR</Text>
+                    <Text style={{color:'#000'}}>OR</Text>
                 </View>
                 <Button title='Search All Flights' color={'#3199da'} handleSubmit={() => { navigation.navigate('AllFlightScreen') }} />
                 <Modal visible={flightModalOpen} animationType='none' transparent={false} >

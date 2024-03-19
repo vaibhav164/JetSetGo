@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     toptitle: {
         fontSize: 15,
         fontWeight: '500',
-        textAlign: 'right'
+        textAlign: 'right',
+        color:'#000'
     },
     boldTitle: {
         fontSize: 50,
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
     baseTitle: {
         fontSize: 20,
         fontWeight: '600',
-        textAlign: 'right'
+        textAlign: 'right',
+        color:'#000'
     }
 })
