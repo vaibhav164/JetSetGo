@@ -16,19 +16,18 @@ export const AllFlightsScreen = ({ navigation }) => {
     const [airLineList, setAirLineList] = useState([]);
     const [filterModalVisible, setFilterModalVisible] = useState(false);
     const [sortModalVisible, setsortModalVisible] = useState(false);
-    useEffect(()=>{
+    useEffect(() => {
         setRenderList(tripData);
-    },[tripData])
+    }, [tripData])
     useFocusEffect(
         useCallback(() => {
             const fetchData = async () => {
                 try {
                     const flightData = await getFlightDetails();
                     setTripData(flightData);
-                    let list = flightData.map(item=>{
+                    let list = flightData.map(item => {
                         return item.airline
                     });
-                    console.log("sdfsdfsdfsdfsd", list);
                     setAirLineList([...new Set(list)])
                 } catch (error) {
                     Alert.alert("Error", error);
@@ -42,25 +41,25 @@ export const AllFlightsScreen = ({ navigation }) => {
             return (<FlightCard airlineName={item.airline} price={item.price} duration={item.duration} />)
         }
     }
-    const filterList =(airline:string)=>{
-        const filteredList =tripData.filter(item=>{
-                return (item.airline == airline)
+    const filterList = (airline: string) => {
+        const filteredList = tripData.filter(item => {
+            return (item.airline == airline)
         })
         setFilterModalVisible(false);
         setRenderList(filteredList);
     }
-    const sortListData =(sortType:string)=>{
-        console.log("sortType",sortType)
-        const sortedList = renderList.sort((a, b)=>{
-         if(sortType == 'increase') 
-            {
+    const sortListData = (sortType: string) => {
+        console.log("sortType", sortType);
+        const sortArray = new Array(...renderList)
+        const sortedArray = sortArray.sort((a, b) => {
+            if (sortType == 'increase') {
                 return a.price - b.price
-            }else if(sortType == 'decrease'){
+            } else if (sortType == 'decrease') {
                 return b.price - a.price
             }
         })
         setsortModalVisible(false);
-        setRenderList(sortedList);
+        setRenderList(sortedArray);
     }
     return (
         <View style={styles.container}>
@@ -68,18 +67,18 @@ export const AllFlightsScreen = ({ navigation }) => {
             <View style={styles.box}>
                 <View style={styles.filterBox}>
                     <Text style={styles.title}>{'Filter By'}</Text>
-                    <Text style={[styles.normalText, activeFiler == 'airlines' && { color: '#3199da', fontWeight: '700' }]} onPress={() => {setActiveFilter('airlines'), setFilterModalVisible(true)}}>{"Airlines"}</Text>
+                    <Text style={[styles.normalText, activeFiler == 'airlines' && { color: '#3199da', fontWeight: '700' }]} onPress={() => { setActiveFilter('airlines'), setFilterModalVisible(true) }}>{"Airlines"}</Text>
                     <Text style={styles.title}>{'Sort By'}</Text>
-                    <Text style={[styles.normalText, activeFiler == 'price' && { color: '#3199da', fontWeight: '700' }]} onPress={() => {setActiveFilter('price'), setsortModalVisible(true)}}>{"Price"}</Text>
+                    <Text style={[styles.normalText, activeFiler == 'price' && { color: '#3199da', fontWeight: '700' }]} onPress={() => { setActiveFilter('price'), setsortModalVisible(true) }}>{"Price"}</Text>
                 </View>
                 <View style={styles.clearBox}>
-                    <Text style={[styles.clearAllText, activeFiler == 'clearAll' && { color: '#3199da', fontWeight: '700' }]} onPress={() => {setActiveFilter('clearAll'), setRenderList(tripData)}}>{"ClearAll"}</Text>
-                    <Icon name='close' size={25} color={activeFiler == 'clearAll' ? '#3199da' : '#000'} onPress={() => {setActiveFilter('clearAll'), setRenderList(tripData)}} />
+                    <Text style={[styles.clearAllText, activeFiler == 'clearAll' && { color: '#3199da', fontWeight: '700' }]} onPress={() => { setActiveFilter('clearAll'), setRenderList([...tripData]) }}>{"ClearAll"}</Text>
+                    <Icon name='close' size={25} color={activeFiler == 'clearAll' ? '#3199da' : '#000'} onPress={() => { setActiveFilter('clearAll'), setRenderList([...tripData]) }} />
                 </View>
                 <FlatList data={renderList} renderItem={renderCard} />
                 {<Modal visible={sortModalVisible || filterModalVisible} transparent={true} style={styles.modal}>
-                    {filterModalVisible && <FilterModal handleItemList={val=>filterList(val)} handleClose={() => {setFilterModalVisible(false), setRenderList(tripData)}} title="Filer By" airlineList={airLineList} />}
-                    {sortModalVisible && <SortModal handleSortOrder={val=>sortListData(val)} handleClose={() => {setsortModalVisible(false), setRenderList(tripData)}} title="Price By" />}
+                    {filterModalVisible && <FilterModal handleItemList={val => filterList(val)} handleClose={() => { setFilterModalVisible(false), setRenderList(tripData) }} title="Filer By" airlineList={airLineList} />}
+                    {sortModalVisible && <SortModal handleSortOrder={val => sortListData(val)} handleClose={() => { setsortModalVisible(false), setRenderList(tripData) }} title="Price By" />}
                 </Modal>}
             </View>
         </View>
