@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react'
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Alert, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Header } from '../components/Header'
 import { flightData } from './BookingScreen';
 import { useFocusEffect } from '@react-navigation/native';
 import { getFlightDetails } from '../actions/getFlightDetails';
 import { FlightCard } from '../components/FlightCards';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 export const AllFlightsScreen =({navigation})=>{
     const [tripData, setTripData] = useState<flightData[]>([]);
@@ -42,9 +43,16 @@ export const AllFlightsScreen =({navigation})=>{
                     <Text style={styles.title}>{'Sort By'}</Text>
                     <Text style={[styles.normalText,activeFiler == 'airlines' && {color:'#3199da', fontWeight:'700'}]} onPress={()=>setActiveFilter('airlines')}>{"Airlines"}</Text>
                 </View>
+                    <View style={styles.clearBox}>
+                        <Text style={[styles.clearAllText,activeFiler == 'clearAll' && {color:'#3199da', fontWeight:'700'}]} onPress={()=>setActiveFilter('clearAll')}>{"ClearAll"}</Text>
+                        <Icon name='close' size={25} color={activeFiler == 'clearAll' ? '#3199da':'#000'} onPress={()=>setActiveFilter('clearAll')}/>
+                    </View>
                 <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
                 {renderCard()}
                 </ScrollView>
+                <Modal visible={false} transparent={false}>
+                        
+                </Modal>
             </View>
         </View>
     )
@@ -79,5 +87,17 @@ const styles = StyleSheet.create({
     normalText:{
         fontSize:16,
         color:'#000'
-    }
+    },
+    clearAllText:{
+        fontSize:18,
+        color:'#000',
+        fontWeight:'800',
+        marginRight:'4%'
+    },
+    clearBox: {
+    flexDirection:'row', 
+    justifyContent:'center', 
+    alignItems:'center',
+    marginBottom:'4%'
+}
 }) 
